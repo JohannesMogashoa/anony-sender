@@ -11,8 +11,9 @@ export default NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         })
     ],
-    pages: {
-        signIn: '/auth/signin',
+    theme: {
+        colorScheme: "light",
+        brandColor: "#ba38f6"
     },
     debug: true,
     secret: process.env.AUTH_SECRET
