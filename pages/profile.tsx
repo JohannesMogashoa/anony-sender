@@ -1,11 +1,10 @@
 import AuthedNav from "@/components/AuthedNav";
-import QuestionCreateFrom from "@/components/QuestionCreateFrom";
+import QuestionCreateForm from "@/components/QuestionCreateForm";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const Profile = () => {
-    const [showForm, setShowForm] = useState(false);
     const [questions, setQuestions] = useState([]);
     const router = useRouter();
     const { data, status } = useSession();
@@ -15,14 +14,11 @@ const Profile = () => {
     }, [status]);
 
     return (
-        <main className="p-10 min-h-screen">
-            <AuthedNav setShowForm={setShowForm} />
+        <main className="p-10 h-screen">
+            <AuthedNav />
 
             <div className="flex flex-1">
-                <aside className="p-5 w-1/4 flex-1 border-2 rounded-md shadow-sm shadow-yellow-50 flex flex-col">
-                    <h2 className="text-2xl font-semibold text-white mb-10 text-center">
-                        Profile Information
-                    </h2>
+                <aside className="p-5 w-1/3 flex-1 border-2 rounded-md shadow-sm shadow-yellow-50 flex flex-col">
                     <div className="flex flex-col items-center mb-10">
                         <img
                             src={data?.user?.image!}
@@ -42,30 +38,25 @@ const Profile = () => {
                         <p>Total Responses:</p>
                         <p>{questions.length}</p>
                     </div>
+
+                    <QuestionCreateForm />
                 </aside>
 
                 <section
                     className={
                         !questions.length
-                            ? "w-3/4 p-5 min-h-full flex items-center justify-center"
+                            ? "w-2/3 p-5 min-h-full flex items-center justify-center"
                             : ""
                     }>
                     {!questions.length ? (
                         <div className="w-1/2 text-white/60">
-                            Unfortunately you have no questions. Please go ahead and create by
-                            clicking "Add New" button.
+                            Unfortunately you have no questions.
                         </div>
                     ) : (
                         <div></div>
                     )}
                 </section>
             </div>
-
-            {/* {showForm ? (
-                QuestionCreateFrom
-            ) : (
-                <button onClick={() => setShowForm(true)}>Create New Question</button>
-            )} */}
         </main>
     );
 };

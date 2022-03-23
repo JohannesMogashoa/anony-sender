@@ -39,6 +39,7 @@ h6 {
     color: white;
     box-shadow: 0 0 2px #eee;
     border-radius: 10px;
+    outline: none;
 }
 
 .btn-grad:hover {

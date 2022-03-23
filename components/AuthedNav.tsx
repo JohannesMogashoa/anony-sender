@@ -1,16 +1,13 @@
 import { signOut } from "next-auth/react";
 import React from "react";
 
-const AuthedNav = ({ setShowForm }: any) => {
+const AuthedNav = () => {
     return (
         <nav className="flex items-center justify-between mb-10">
             <h1 className="logo text-3xl">Anony Sender</h1>
             <div className="space-x-5">
-                <button className="btn-grad" onClick={() => setShowForm(true)}>
-                    Add New
-                </button>
                 <button
-                    className="text-white font-semibold hover:text-sm transition-all border py-2 px-4 rounded-md"
+                    className="btn-grad"
                     onClick={() => signOut({ callbackUrl: "/", redirect: true })}>
                     Sign Out
                 </button>
