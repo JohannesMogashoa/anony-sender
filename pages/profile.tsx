@@ -18,7 +18,8 @@ const Profile = () => {
             <AuthedNav />
 
             <div className="flex flex-1">
-                <aside className="p-5 w-1/3 flex-1 border-2 rounded-md shadow-sm shadow-yellow-50 flex flex-col">
+                {/* Profile Outline and Question Creator */}
+                <aside className="p-5 w-1/3 flex-1 border-2 border-white/60 rounded-md shadow-sm shadow-yellow-50 flex flex-col">
                     <div className="flex flex-col items-center mb-10">
                         <img
                             src={data?.user?.image!}
@@ -42,6 +43,7 @@ const Profile = () => {
                     <QuestionCreateForm />
                 </aside>
 
+                {/* Cards showing all questions created by user */}
                 <section
                     className={
                         !questions.length
