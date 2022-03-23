@@ -10,7 +10,7 @@ const AuthedNav = ({ setShowForm }: any) => {
                     Add New
                 </button>
                 <button
-                    className="text-white font-semibold hover:text-lg transition-all"
+                    className="text-white font-semibold hover:text-sm transition-all border py-2 px-4 rounded-md"
                     onClick={() => signOut({ callbackUrl: "/", redirect: true })}>
                     Sign Out
                 </button>
