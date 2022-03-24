@@ -9,8 +9,17 @@ const Profile = () => {
     const router = useRouter();
     const { data, status } = useSession();
 
+    const fetchQuestions = () => {
+        fetch("/api/questions")
+            .then((res) => res.json)
+            .then((data) => console.log(data))
+            .catch((error) => console.error(error));
+    };
+
     useEffect(() => {
         if (status == "unauthenticated") router.replace("/");
+
+        fetchQuestions();
     }, [status]);
 
     return (

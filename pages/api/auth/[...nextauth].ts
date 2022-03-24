@@ -15,6 +15,6 @@ export default NextAuth({
         colorScheme: "light",
         brandColor: "#ba38f6"
     },
-    debug: true,
+    debug: false,
     secret: process.env.AUTH_SECRET
 })
