@@ -10,17 +10,24 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             message: "You are unauthorized. Please login to create a question"
         })
 
-        const user = await prisma.user.findUnique({ select: { email: true }, where: { email: session?.user?.email! } })
-
-        const question = await prisma.question.create({
-            data: {
-                question: req.body.question,
-                email: user?.email!
+        const userId = await prisma.user.findUnique({
+            select: { id: true },
+            where: {
+                email: session?.user?.email!
             }
         })
 
-        res.status(201).json(question)
-    } catch (error) {
+        prisma.question.create({
+            data: {
+                userId: userId?.id!,
+                question: req.body.question
+            }
+        }).then((question) => res.status(201).json({
+            message: `Question: ${question.id} created successfully`
+        })).catch(error => res.status(500).json(error))
 
+
+    } catch (error) {
+        console.log(error)
     }
 }

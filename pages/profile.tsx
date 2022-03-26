@@ -11,8 +11,11 @@ const Profile = () => {
 
     const fetchQuestions = () => {
         fetch("/api/questions")
-            .then((res) => res.json)
-            .then((data) => console.log(data))
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setQuestions(data);
+            })
             .catch((error) => console.error(error));
     };
 

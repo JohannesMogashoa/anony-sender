@@ -66,8 +66,8 @@ model Question {
   archived  Boolean  @default(false)
   createdAt DateTime @default(now())
 
-  email String
-  user  User   @relation(fields: [email], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   answers Answer[]
 }

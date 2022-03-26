@@ -10,19 +10,18 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             message: "You are unauthorized to perform this"
         })
 
-        const userEmail = await prisma.user.findUnique({ select: { email: true }, where: { email: session?.user?.email! } })
+        const user = await prisma.user.findUnique({ select: { id: true }, where: { email: session?.user?.email! } })
 
-        const questions = await prisma.question.findMany({
-            select: { question: true, answers: true, createdAt: true },
+        prisma.question.findMany({
+            select: { id: true, question: true, answers: true, createdAt: true, userId: true },
             where: {
                 archived: false,
-                email: userEmail?.email!
+                userId: user?.id!
             }
         })
+            .then(questions => res.status(200).json(questions))
+            .catch(error => res.status(500).json({ message: error }))
 
-        console.log(questions)
-
-        res.status(200).json(questions)
     } catch (error) {
         res.status(500).json(error)
     }
