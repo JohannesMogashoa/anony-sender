@@ -15,6 +15,9 @@ export default NextAuth({
         colorScheme: "light",
         brandColor: "#ba38f6"
     },
+    pages: {
+        newUser: "/new-user",
+    },
     debug: false,
     secret: process.env.AUTH_SECRET
 })
