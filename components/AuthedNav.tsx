@@ -6,7 +6,7 @@ const AuthedNav = () => {
     return (
         <nav className="flex items-center justify-between mb-10">
             <Link href={"/"}>
-                <a className="logo text-3xl">
+                <a className="logo text-2xl md:text-3xl">
                     <>Anony Sender</>
                 </a>
             </Link>

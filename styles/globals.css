@@ -47,3 +47,7 @@ h6 {
     color: #fff;
     text-decoration: none;
 }
+
+.hide_scrollbar::-webkit-scrollbar {
+    display: none;
+}
