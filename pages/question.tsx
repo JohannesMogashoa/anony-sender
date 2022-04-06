@@ -20,10 +20,10 @@ export async function getServerSideProps(context: NextPageContext) {
 const QuestionPage: NextPage = ({ question, answers }: any | null) => {
     const { data } = useSession();
     return (
-        <div className="p-10">
+        <div className="p-10 h-screen overflow-hidden">
             <AuthedNav />
-            <section className="flex space-x-5">
-                <aside className="p-5 w-1/3 border-2 border-white/60 rounded-md shadow-sm shadow-yellow-50 flex flex-col">
+            <section className="flex flex-col md:flex-row md:space-x-10 flex-1 space-y-7 md:space-y-0">
+                <aside className="p-5 md:w-1/3  border-2 border-white/60 rounded-md shadow-sm shadow-yellow-50 hidden md:flex flex-col flex-1">
                     <div className="flex flex-col items-center mb-10">
                         <img
                             src={data?.user?.image!}
@@ -37,17 +37,19 @@ const QuestionPage: NextPage = ({ question, answers }: any | null) => {
                     </div>
                     <QuestionCreateForm />
                 </aside>
-                <main className="p-5 w-2/3 border-2 border-white/60 rounded-md shadow-inner flex flex-col">
+                <main className="p-5 h-[80vh] w-full md:w-2/3 border-2 border-white/60 rounded-md shadow-inner flex flex-col">
                     <div>
                         <h1 className="text-3xl italic text-white/50 mb-5 text-center">
                             {question.question}
                         </h1>
                         <p className="italic mb-4 text-white">Responses: {answers?.length}</p>
-                        {answers?.map((answer: any) => (
-                            <div className="bg-white/20 p-3 rounded-md mb-3">
-                                <p className="text-white/75">{answer.answer}</p>
-                            </div>
-                        ))}
+                        <div className="max-h-[570px] md:max-h-[300px] overflow-hidden overflow-y-scroll hide_scrollbar">
+                            {answers?.map((answer: any) => (
+                                <div className="bg-white/20 p-3 rounded-md mb-3">
+                                    <p className="text-white/75">{answer.answer}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </main>
             </section>

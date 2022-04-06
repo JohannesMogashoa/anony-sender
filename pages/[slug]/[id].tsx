@@ -56,7 +56,8 @@ const QuestionResponse = ({ question, slug }: any) => {
             <Head>
                 <title>{slug.toUpperCase()} Question</title>
             </Head>
-            <main className="flex items-center justify-center h-full">
+            <main className="flex flex-col items-center justify-center h-full">
+                <h1 className="logo text-4xl mb-10">AnonySender</h1>
                 <section className="bg-white/20 p-10 rounded-md">
                     <h1 className="text-3xl italic text-white/50 mb-5 text-center">
                         {question?.question}
