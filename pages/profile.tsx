@@ -30,7 +30,7 @@ const Profile = () => {
         <main className="p-10 h-screen">
             <AuthedNav />
 
-            <div className="flex flex-1 items-start">
+            <div className="flex flex-1 items-start space-x-10">
                 {/* Profile Outline and Question Creator */}
                 <aside className="p-5 w-1/3 flex-1 border-2 border-white/60 rounded-md shadow-sm shadow-yellow-50 flex flex-col">
                     <div className="flex flex-col items-center mb-10">
@@ -60,15 +60,15 @@ const Profile = () => {
                 <section
                     className={
                         !questions.length
-                            ? "w-2/3 p-5 min-h-full flex items-center justify-center"
-                            : "w-2/3 p-5 min-h-full"
+                            ? "w-2/3 min-h-full flex items-center justify-center"
+                            : "w-2/3 min-h-full"
                     }>
                     {!questions.length ? (
                         <div className="w-1/2 text-white/60">
                             Unfortunately you have no questions.
                         </div>
                     ) : (
-                        <div className="grid grid-cols-3">
+                        <div className="grid grid-cols-3 gap-3">
                             {questions.map((question: any) => (
                                 <a>
                                     <Link href={`/question?id=${question.id}`}>

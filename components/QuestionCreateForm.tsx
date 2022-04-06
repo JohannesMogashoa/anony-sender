@@ -17,13 +17,15 @@ const QuestionCreateFrom = () => {
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                referrerPolicy: "no-referrer",
                 body: JSON.stringify(values),
             })
                 .then((res) => res.json())
                 .then((data) => {
                     console.log(data);
                     questionForm.resetForm();
+                    window.location.reload();
                 })
                 .catch((error) => console.error(error));
         },
