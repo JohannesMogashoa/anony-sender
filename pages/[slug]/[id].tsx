@@ -2,12 +2,18 @@ import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { IncomingMessage, ServerResponse } from "http";
-import { createAnswer, getQuestion } from "utils/api-calls";
+import { createAnswer, getQuestion } from "@/utils/api_calls";
+import { Question } from "@/utils/types";
 
 interface ServerSideProps {
     req: IncomingMessage | undefined;
     res: ServerResponse | undefined;
     resolvedUrl: string | undefined;
+}
+
+interface Props {
+    question: Question;
+    slug?: string;
 }
 
 export async function getServerSideProps({ req, res, resolvedUrl }: ServerSideProps) {
@@ -24,7 +30,7 @@ export async function getServerSideProps({ req, res, resolvedUrl }: ServerSidePr
     };
 }
 
-const QuestionResponse = ({ question, slug }: any) => {
+const QuestionResponse = ({ question, slug }: Props) => {
     const [haveAnswered, setHaveAnswered] = useState(false);
 
     useEffect(() => {
@@ -54,7 +60,7 @@ const QuestionResponse = ({ question, slug }: any) => {
     return (
         <div className="p-10 h-screen">
             <Head>
-                <title>{slug.toUpperCase()} Question</title>
+                <title>{slug?.toUpperCase()} Question</title>
             </Head>
             <main className="flex flex-col items-center justify-center h-full">
                 <h1 className="logo text-4xl mb-10">AnonySender</h1>

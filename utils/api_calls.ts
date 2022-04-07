@@ -1,9 +1,31 @@
-export const getQuestion = async (id: string) => {
+import { Question, Answer } from "./types"
+
+/**
+ * 
+ * @param id Will get question by Question ID
+ * @returns A question object
+ */
+export const getQuestion: (id: string) => Promise<Question> = async (id: string) => {
     const question = await fetch("http://localhost:3000/api/questions/" + id)
     return question.json()
 }
 
-export const createAnswer = async (answer: string, questionId: string) => {
+/**
+ * Will Get all questions
+ * @returns An array of question objects
+ */
+export const getQuestions: () => Promise<Question[]> = async () => {
+    const questions = await fetch("http://localhost:3000/api/questions")
+    return questions.json()
+}
+
+/**
+ * 
+ * @param answer Will post an answer to the database
+ * @param questionId Will use the Question ID to post the answer to the correct question
+ * @returns A response object of success or failure message
+ */
+export const createAnswer: (answer: string, questionId: string) => Promise<{ message: string }> = async (answer: string, questionId: string) => {
     const response = await fetch("/api/answers/create", {
         method: "POST",
         mode: "cors", // no-cors, *cors, same-origin
@@ -23,12 +45,22 @@ export const createAnswer = async (answer: string, questionId: string) => {
     return response.json()
 }
 
-export const getAnswers = async (questionId: string) => {
+/**
+ * 
+ * @param questionId Will get all answers for a question
+ * @returns  An array of answer objects
+ */
+export const getAnswers: (questionId: string) => Promise<Answer[]> = async (questionId: string) => {
     const response = await fetch("http://localhost:3000/api/answers/" + questionId)
     return response.json()
 }
 
-export const setUserName = async (username: string) => {
+/**
+ * 
+ * @param username Preferred username by user which will be set to the user's profile
+ * @returns A response object of success or failure message
+ */
+export const setUserName: (username: string) => Promise<{ message: string }> = async (username: string) => {
     const response = await fetch("/api/auth/set-username", {
         method: "POST",
         mode: "cors", // no-cors, *cors, same-origin

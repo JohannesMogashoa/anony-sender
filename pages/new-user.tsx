@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
-import { setUserName } from "utils/api-calls";
+import { setUserName } from "@/utils/api_calls";
 
 const NewUserPage = () => {
     const { status } = useSession();
