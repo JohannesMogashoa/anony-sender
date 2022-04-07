@@ -2,7 +2,7 @@ import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { IncomingMessage, ServerResponse } from "http";
-import { createAnswer, getQuestion } from "@/utils/api_calls";
+import { createAnswer, getQuestion, verifySlug } from "@/utils/api_calls";
 import { Question } from "@/utils/types";
 
 interface ServerSideProps {
@@ -20,14 +20,24 @@ export async function getServerSideProps({ req, res, resolvedUrl }: ServerSidePr
     const slug = resolvedUrl?.split("/")[1];
     const questionId = resolvedUrl?.split("/")[2];
 
-    const question = await getQuestion(questionId!);
+    const { isValid } = await verifySlug(slug!, questionId!);
 
-    return {
-        props: {
-            question,
-            slug,
-        },
-    };
+    if (isValid) {
+        const question = await getQuestion(questionId!);
+        return {
+            props: {
+                question,
+                slug,
+            },
+        };
+    } else {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: true,
+            },
+        };
+    }
 }
 
 const QuestionResponse = ({ question, slug }: Props) => {

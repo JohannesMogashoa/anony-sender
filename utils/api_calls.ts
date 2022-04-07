@@ -47,6 +47,32 @@ export const createAnswer: (answer: string, questionId: string) => Promise<{ mes
 
 /**
  * 
+ * @param slug Will use to check if the slug is valid to the question
+ * @param questionId Will use the Question ID to get user linked to the question
+ * @returns A response object of valid or invalid slug message
+ */
+export const verifySlug: (slug: string, questionId: string) => Promise<{ isValid: boolean }> = async (slug: string, questionId: string) => {
+    const response = await fetch("http://localhost:3000/api/questions/check-slug", {
+        method: "POST",
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify({
+            slug,
+            questionId
+        })
+    })
+    return response.json()
+}
+
+/**
+ * 
  * @param questionId Will get all answers for a question
  * @returns  An array of answer objects
  */
