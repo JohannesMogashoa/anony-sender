@@ -1,3 +1,4 @@
+import { ServerUrl } from "@/lib/url"
 import { Question, Answer } from "./types"
 
 /**
@@ -6,7 +7,7 @@ import { Question, Answer } from "./types"
  * @returns A question object
  */
 export const getQuestion: (id: string) => Promise<Question> = async (id: string) => {
-    const question = await fetch("http://localhost:3000/api/questions/" + id)
+    const question = await fetch(`${ServerUrl}/api/questions/${id}`)
     return question.json()
 }
 
@@ -15,7 +16,7 @@ export const getQuestion: (id: string) => Promise<Question> = async (id: string)
  * @returns An array of question objects
  */
 export const getQuestions: () => Promise<Question[]> = async () => {
-    const questions = await fetch("http://localhost:3000/api/questions")
+    const questions = await fetch(`${ServerUrl}/api/questions`)
     return questions.json()
 }
 
@@ -52,7 +53,7 @@ export const createAnswer: (answer: string, questionId: string) => Promise<{ mes
  * @returns A response object of valid or invalid slug message
  */
 export const verifySlug: (slug: string, questionId: string) => Promise<{ isValid: boolean }> = async (slug: string, questionId: string) => {
-    const response = await fetch("http://localhost:3000/api/questions/check-slug", {
+    const response = await fetch(`${ServerUrl}/api/questions/check-slug`, {
         method: "POST",
         mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -77,7 +78,7 @@ export const verifySlug: (slug: string, questionId: string) => Promise<{ isValid
  * @returns  An array of answer objects
  */
 export const getAnswers: (questionId: string) => Promise<Answer[]> = async (questionId: string) => {
-    const response = await fetch("http://localhost:3000/api/answers/" + questionId)
+    const response = await fetch(`${ServerUrl}/api/answers/${questionId}`)
     return response.json()
 }
 
