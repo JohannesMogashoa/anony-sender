@@ -18,6 +18,6 @@ export default NextAuth({
     pages: {
         newUser: "/new-user",
     },
-    debug: false,
+    debug: true,
     secret: process.env.AUTH_SECRET
 })
