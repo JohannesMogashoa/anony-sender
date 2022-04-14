@@ -1,4 +1,4 @@
-import { ServerUrl } from "@/lib/url"
+import { ServerUrl } from "@/backend/utils/url"
 import { Question, Answer } from "./types"
 
 /**

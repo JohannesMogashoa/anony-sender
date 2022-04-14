@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next/types";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/backend/utils/prisma";
 import { getSession } from "next-auth/react";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
