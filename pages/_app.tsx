@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 // Initializing TRPC server on the Next.js server
 import { withTRPC } from "@trpc/next";
-import type { AppRouter } from "@/backend/router";
+import type { AppRouter } from "@/backend/routers";
 
 // Check to see the current environment then generate the appropriate URL
 function getBaseUrl() {
