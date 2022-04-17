@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PageOptions, Question } from "@/utils/types";
-import { getQuestions } from "@/utils/api_calls";
 import ProfileCard from "@/components/ProfileCard";
 import QuestionsSection from "@/components/QuestionsSection";
 import { trpc } from "@/utils/trpc";
