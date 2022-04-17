@@ -4,7 +4,9 @@ import * as trpcNext from '@trpc/server/adapters/next';
 import { NodeHTTPCreateContextFnOptions } from '@trpc/server/adapters/node-http';
 import { IncomingMessage } from 'http';
 import ws from 'ws';
+import { prisma } from "./prisma";
 
+// console.log('createContext for', session?.user?.name ?? 'unknown user');
 export const createContext = async ({
     req,
     res,
@@ -12,7 +14,6 @@ export const createContext = async ({
     | trpcNext.CreateNextContextOptions
     | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
     const session = await getSession({ req });
-    console.log('createContext for', session?.user?.name ?? 'unknown user');
     return {
         req,
         res,

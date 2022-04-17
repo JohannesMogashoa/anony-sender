@@ -2,17 +2,18 @@ import { createRouter } from '@/backend/utils/createRouter';
 import { getEmailOrThrow, questionRouter } from '@/backend/routers/questionRouter';
 import superjson from "superjson"
 import { z } from 'zod';
+import { prisma } from '../utils/prisma';
 
 export const appRouter = createRouter()
     .transformer(superjson)
     .mutation('set-username', {
         input: z.object({
-            username: z.string()
+            username: z.string(),
         }),
         async resolve({ ctx, input }) {
             const email = getEmailOrThrow(ctx)
 
-            await ctx.prisma!.user.update({
+            await prisma.user.update({
                 where: {
                     email,
                 },

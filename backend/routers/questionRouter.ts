@@ -25,13 +25,17 @@ const getUserId = async (ctx: Context) => {
 export const questionRouter = createRouter()
     .mutation('create-question', {
         input: z.object({
-            userId: z.string().cuid(),
             question: z.string()
         }),
         async resolve({ ctx, input }) {
+            const userId = await getUserId(ctx)
+
+            if (!userId) return;
+
             const questionInDb = await ctx.prisma!.question.create({
                 data: {
-                    ...input
+                    userId,
+                    question: input.question
                 }
             })
 
@@ -44,7 +48,7 @@ export const questionRouter = createRouter()
             // const user = await ctx.prisma!.user.findUnique({ select: { id: true }, where: { email } })
             const userId = await getUserId(ctx)
             const questions = await ctx.prisma!.question.findMany({
-                select: { id: true, question: true, answers: true, createdAt: true, userId: true },
+                select: { id: true, question: true, createdAt: true, userId: true, archived: true },
                 where: {
                     archived: false,
                     userId
@@ -56,28 +60,22 @@ export const questionRouter = createRouter()
     .query('get-question-by-id', {
         input: z.object({
             id: z.string().cuid(),
-            slug: z.string()
         }),
         async resolve({ ctx, input }) {
-            const user = await ctx.prisma!.question.findUnique({
-                select: {
-                    user: true
-                },
+
+            const question = await ctx.prisma!.question.findUnique({
                 where: {
-                    id: input.id,
+                    id: input.id
                 }
             })
 
-            if (user?.user.slug === input.slug) {
-                const question = await ctx.prisma!.question.findUnique({
-                    where: {
-                        id: input.id
-                    }
-                })
-
-                return { success: true, question }
+            if (!question) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: 'Question not found',
+                });
             } else {
-                return { success: false, message: 'Invalid slug' }
+                return question
             }
         }
     })

@@ -14,8 +14,8 @@ const QuestionAnswers = ({ question, answers }: Props) => {
                 </p>
                 <div className="max-h-[570px] md:max-h-[300px] overflow-hidden overflow-y-scroll hide_scrollbar">
                     {answers &&
-                        answers?.map((answer: any) => (
-                            <div className="bg-white/20 p-3 rounded-md mb-3">
+                        answers?.map((answer: Answer) => (
+                            <div key={answer.id} className="bg-white/20 p-3 rounded-md mb-3">
                                 <p className="text-white/75">{answer.answer}</p>
                             </div>
                         ))}

@@ -1,33 +1,18 @@
 import React from "react";
 import { useFormik } from "formik";
+import { trpc } from "@/utils/trpc";
 
 const QuestionCreateFrom = () => {
+    const createQuestion = trpc.useMutation("questioncreate-question");
+
     const questionForm = useFormik({
         initialValues: {
             question: "",
         },
         onSubmit: (values) => {
-            fetch("/api/questions/create", {
-                method: "POST", // *GET, POST, PUT, DELETE, etc.
-                mode: "cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
-                headers: {
-                    "Content-Type": "application/json",
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                redirect: "follow", // manual, *follow, error
-                // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                referrerPolicy: "no-referrer",
-                body: JSON.stringify(values),
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log(data);
-                    questionForm.resetForm();
-                    window.location.reload();
-                })
-                .catch((error) => console.error(error));
+            createQuestion.mutate({ question: values.question });
+            questionForm.resetForm();
+            window.location.reload();
         },
     });
     return (

@@ -1,22 +1,21 @@
+import { trpc } from "@/utils/trpc";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
-import { setUserName } from "@/utils/api_calls";
 
 const NewUserPage = () => {
     const { status } = useSession();
     const [username, setUsername] = useState("");
     const router = useRouter();
 
+    const usernameMutation = trpc.useMutation(["set-username"]);
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        setUserName(username)
-            .then(() => {
-                setUsername("");
-                router.replace("/profile");
-            })
-            .catch((error) => console.log(error));
+        usernameMutation.mutate({ username });
+
+        router.replace("/profile");
     };
 
     useEffect(() => {
