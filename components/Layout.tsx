@@ -12,7 +12,9 @@ const Layout = ({ children, pageOptions }: LayoutProps) => {
                 <meta name="description" content={pageOptions.description} />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main role={"main"} className="container w-screen h-screen p-10 overflow-hidden">
+            <main
+                role={"main"}
+                className="container w-screen h-screen p-10 overflow-y-scroll hide_scrollbar sm:overflow-hidden">
                 {children}
             </main>
         </>

@@ -14,7 +14,7 @@ export const getEmailOrThrow = (ctx: Context) => {
     return email
 }
 
-const getUserId = async (ctx: Context) => {
+export const getUserId = async (ctx: Context) => {
     const email = getEmailOrThrow(ctx);
     const user = await ctx.prisma!.user.findUnique({ select: { id: true }, where: { email } })
 
@@ -44,8 +44,6 @@ export const questionRouter = createRouter()
     })
     .query('get-questions-for-user', {
         async resolve({ ctx }) {
-            // const email = getEmailOrThrow(ctx)
-            // const user = await ctx.prisma!.user.findUnique({ select: { id: true }, where: { email } })
             const userId = await getUserId(ctx)
             const questions = await ctx.prisma!.question.findMany({
                 select: { id: true, question: true, createdAt: true, userId: true, archived: true },

@@ -36,7 +36,7 @@ const QuestionPage = ({ questionId }: Props) => {
     return (
         <Layout pageOptions={pageOptions}>
             <AuthedNav />
-            <section className="flex flex-col md:flex-row md:space-x-10 flex-1 space-y-7 md:space-y-0">
+            <section className="flex flex-col flex-1 md:flex-row md:space-x-10 space-y-7 md:space-y-0">
                 <ProfileCard data={data} />
                 {dbData && <QuestionAnswers question={dbData.question} answers={dbData.answers} />}
             </section>

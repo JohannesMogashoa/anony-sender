@@ -1,8 +1,9 @@
 import { createRouter } from '@/backend/utils/createRouter';
-import { getEmailOrThrow, questionRouter } from '@/backend/routers/questionRouter';
+import { getEmailOrThrow, questionRouter, getUserId } from '@/backend/routers/questionRouter';
 import superjson from "superjson"
 import { z } from 'zod';
 import { prisma } from '../utils/prisma';
+import { ServerUrl } from '../utils/url';
 
 export const appRouter = createRouter()
     .transformer(superjson)
@@ -23,6 +24,22 @@ export const appRouter = createRouter()
             })
 
             return { success: true, message: "Username set successfully" }
+        }
+    })
+    .query('get-share-url', {
+        async resolve({ ctx }) {
+            const userId = await getUserId(ctx)
+
+            const user = await prisma.user.findUnique({
+                where: {
+                    id: userId,
+                },
+                select: {
+                    slug: true,
+                },
+            });
+
+            return `${ServerUrl}/${user?.slug}`
         }
     })
     .merge('question', questionRouter)
