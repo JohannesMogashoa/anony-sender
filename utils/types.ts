@@ -12,7 +12,7 @@ export interface Question {
     id: string;
     question: string;
     archived: boolean;
-    createdAt: string;
+    createdAt: Date;
     userId: string;
 }
 
@@ -20,5 +20,4 @@ export interface Answer {
     id: string;
     answer: string;
     questionId: string;
-    createdAt: string;
 }

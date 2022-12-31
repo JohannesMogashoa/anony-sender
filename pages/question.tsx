@@ -1,52 +1,44 @@
 import AuthedNav from "@/components/AuthedNav";
-import type { NextPage, NextPageContext } from "next";
+import type { NextPageContext } from "next";
 import { useSession } from "next-auth/react";
-import { getAnswers, getQuestion } from "@/utils/api_calls";
 import Layout from "@/components/Layout";
-import { Answer, Question } from "@/utils/types";
 import ProfileCard from "@/components/ProfileCard";
 import QuestionAnswers from "@/components/QuestionAnswers";
+import { trpc } from "@/utils/trpc";
 
 export async function getServerSideProps(context: NextPageContext) {
     const { id } = context.query;
-    const question = await getQuestion(id as string);
-    const answers = await getAnswers(question.id);
 
-    if (answers.length > 0) {
-        return {
-            props: {
-                question,
-                answers,
-            },
-        };
-    } else {
-        return {
-            props: {
-                question,
-            },
-        };
-    }
+    return {
+        props: {
+            questionId: id,
+        },
+    };
 }
 
 interface Props {
-    question: Question;
-    answers?: Answer[];
+    questionId: string;
 }
 
-const QuestionPage = ({ question, answers }: Props) => {
+const QuestionPage = ({ questionId }: Props) => {
     const { data } = useSession();
 
+    const { data: dbData } = trpc.useQuery([
+        "questionget-question-by-id-with-answers",
+        { id: questionId },
+    ]);
+
     const pageOptions = {
-        title: `${question.question} | AnonySender`,
-        description: `${question.question} created by ${data?.user?.name}`,
+        title: `${dbData?.question} | AnonySender`,
+        description: `${dbData?.question} created by ${data?.user?.name}`,
     };
 
     return (
         <Layout pageOptions={pageOptions}>
             <AuthedNav />
-            <section className="flex flex-col md:flex-row md:space-x-10 flex-1 space-y-7 md:space-y-0">
+            <section className="flex flex-col flex-1 md:flex-row md:space-x-10 space-y-7 md:space-y-0">
                 <ProfileCard data={data} />
-                <QuestionAnswers question={question.question} answers={answers} />
+                {dbData && <QuestionAnswers question={dbData.question} answers={dbData.answers} />}
             </section>
         </Layout>
     );

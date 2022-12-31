@@ -21,10 +21,6 @@ const ProfileCard = ({ data, questions }: Props) => {
                         <p>Total Questions:</p>
                         <p>{questions.length}</p>
                     </div>
-                    <div className="hidden md:flex justify-between text-white/60">
-                        <p>Total Responses:</p>
-                        <p>{questions.length}</p>
-                    </div>
                 </>
             )}
 
